@@ -34,6 +34,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Test Description
+
 Please fork this repository and develop a real estate property search feature using Next.js, MySQL, and GraphQL in your own repository. Include a Docker Compose configuration for Next.js and instructions to generate fake data. This test aims to assess your critical thinking and technical skills, so a complete git log showing all work done is important.
 
 **User Story:**  
