@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  nextjs:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+
+  # Add a fake data generation service if needed
+  fake-data:
+    image: node:14
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: node scripts/generateFakeData.js
