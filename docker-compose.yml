@@ -2,20 +2,25 @@ version: '3.9'
 
 services:
   nextjs:
-    build: .
-    ports:
-      - "3000:3000"
-    volumes:
-      - .:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
-    command: npm run dev
-
-  # Add a fake data generation service if needed
-  fake-data:
-    image: node:14
+    image: node:20
     volumes:
       - .:/app
     working_dir: /app
-    command: node scripts/generateFakeData.js
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: realestate
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
