@@ -15,8 +15,8 @@ services:
   db:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: realestate
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: fazwaz
     ports:
       - "3306:3306"
     volumes:
