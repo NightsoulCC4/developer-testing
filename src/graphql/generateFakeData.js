@@ -12,7 +12,7 @@ const generateFakeData = async (counter) => {
         let type;
 
         if (i % 2 === 0)
-            type = "buy";
+            type = "sale";
         else
             type = "rent";
 

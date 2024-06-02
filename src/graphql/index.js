@@ -129,7 +129,7 @@ const main = async () => {
 
         try {
           let rows;
-          const [result, field, error] = await con.execute(query, array);
+          const [result] = await con.execute(query, array);
 
           if (result.length > 0) {
             rows = result;

@@ -1,20 +1,14 @@
 "use client";
 
 import React, { Dispatch, SetStateAction } from "react";
-import {
-  Button,
-  Layout,
-  Menu,
-  Dropdown,
-  Space,
-  Input,
-} from "antd";
+import { Button, Layout, Menu, Dropdown, Space, Input } from "antd";
 import { DownOutlined, SearchOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 
 import PriceAlertCard from "./PriceAlertCard";
 
-import type { RealEstates } from "../page";
+import type { RealEstates, DataSearch, SearchRealEstates } from "../constants/interfaces";
+import { searchData } from "../service";
 
 const { Header } = Layout;
 
@@ -29,8 +23,8 @@ interface Navbar {
   setBedCount: Dispatch<SetStateAction<number>>;
   area: string;
   setArea: Dispatch<SetStateAction<string>>;
-  data: RealEstates | undefined;
-  setData: Dispatch<SetStateAction<RealEstates | undefined >>;
+  data: RealEstates | SearchRealEstates | undefined;
+  setData: Dispatch<SetStateAction<RealEstates | SearchRealEstates | undefined>>;
 }
 
 const Navbar: React.FC<Navbar> = ({
@@ -45,22 +39,23 @@ const Navbar: React.FC<Navbar> = ({
   area,
   setArea,
   data,
-  setData
+  setData,
 }) => {
-
   const maxPriceOnClick: MenuProps["onClick"] = (e) => {
     switch (e.key) {
       case "1":
-        setMaxPrice(10000);
+        setMaxPrice(0);
         break;
       case "2":
-        setMaxPrice(100000);
+        setMaxPrice(10000);
         break;
       case "3":
+        setMaxPrice(100000);
+        break;
+      case "4":
         setMaxPrice(1000000);
         break;
       default:
-        setMaxPrice(0);
         break;
     }
   };
@@ -68,13 +63,15 @@ const Navbar: React.FC<Navbar> = ({
   const minPriceOnClick: MenuProps["onClick"] = (e) => {
     switch (e.key) {
       case "1":
-        setMinPrice(10000);
+        setMinPrice(0);
         break;
       case "2":
+        setMinPrice(10000);
+        break;
+      case "3":
         setMinPrice(100000);
         break;
       default:
-        setMinPrice(0);
         break;
     }
   };
@@ -114,33 +111,41 @@ const Navbar: React.FC<Navbar> = ({
     },
     {
       label: ">4",
-      key: "4"
-    }
-  ]
+      key: "4",
+    },
+  ];
 
   const min_prices: MenuProps["items"] = [
     {
-      label: 10000,
+      label: 0,
       key: "1",
     },
     {
-      label: 100000,
+      label: 10000,
       key: "2",
+    },
+    {
+      label: 100000,
+      key: "3",
     },
   ];
 
   const max_prices: MenuProps["items"] = [
     {
-      label: 10000,
+      label: 0,
       key: "1",
     },
     {
-      label: 100000,
+      label: 10000,
       key: "2",
     },
     {
-      label: 1000000,
+      label: 100000,
       key: "3",
+    },
+    {
+      label: 1000000,
+      key: "4",
     },
   ];
 
@@ -156,8 +161,8 @@ const Navbar: React.FC<Navbar> = ({
 
   const bedCountProps = {
     items: beds,
-    onClick: onClickBedCount
-  }
+    onClick: onClickBedCount,
+  };
 
   return (
     <Layout>
@@ -211,23 +216,41 @@ const Navbar: React.FC<Navbar> = ({
             <Dropdown menu={bedCountProps}>
               <Button className="max-w-sm mr-2">
                 <Space>
-                  { bedCount == 4 ? ">" : ""}{bedCount == 0 ? "Beds" : bedCount}
+                  {bedCount == 4 ? ">" : ""}
+                  {bedCount == 0 ? "Beds" : bedCount}
                   <DownOutlined />
                 </Space>
               </Button>
             </Dropdown>
           </div>
-          <Input size="small" placeholder="Name of Area" className="w-full max-w-56" onChange={(e) => setArea(e.target.value)} value={area} />
+          <Input
+            size="small"
+            placeholder="Name of Area"
+            className="w-full max-w-56"
+            onChange={(e) => setArea(e.target.value)}
+            value={area}
+          />
           <Button
             className="max-w-lg my-auto mx-2"
             type="primary"
             icon={<SearchOutlined />}
-            disabled={maxPrice <= minPrice}
+            disabled={maxPrice < minPrice}
+            onClick={() => {
+              searchData(purchaseType, minPrice, maxPrice, bedCount, area).then(
+                (res: DataSearch) => {
+                  if (res) {
+                    const data = res.data;
+                    console.log(data);
+                    setData(data);
+                  }
+                }
+              );
+            }}
           >
             Search
           </Button>
         </Menu>
-        {maxPrice <= minPrice ? <PriceAlertCard /> : <></>}
+        {maxPrice < minPrice ? <PriceAlertCard /> : <></>}
       </Header>
     </Layout>
   );
