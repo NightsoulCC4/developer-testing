@@ -10,10 +10,10 @@ import {
   RealEstates,
   Data,
   SearchRealEstates,
-} from "./constants/interfaces";
+} from "./datatype/interfaces";
 import Modals from "./components/Modals";
 
-const App = () => {
+const App: React.FC = () => {
   const [data, setData] = React.useState<
     RealEstates | SearchRealEstates | undefined
   >();
@@ -24,12 +24,9 @@ const App = () => {
   const [bedCount, setBedCount] = React.useState<number>(0);
   const [area, setArea] = React.useState<string>("");
 
-  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
-
   React.useEffect(() => {
-    if (data == undefined)
-      getData().then((res: Data) => setData(res.data));
-  })
+    if (data == undefined) getData().then((res: Data) => setData(res.data));
+  });
 
   const isRealEstates = (data: any): data is RealEstates => {
     return data && Array.isArray(data.real_estates);
@@ -52,7 +49,7 @@ const App = () => {
         setData={setData}
       />
       {
-        <div className="mx-auto inline-block content-center">
+        <div className="mx-8 my-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 justify-center content-center max-w-full">
           {isRealEstates(data)
             ? data?.real_estates?.map((el: RealEstate, index: number) => (
                 <span key={index}>
@@ -61,40 +58,24 @@ const App = () => {
                     short_description={el.short_description}
                     area={el.area}
                     bed_count={el.bed_count}
-                    imageUrl={el.images[0]?.imageUrl}
+                    images={el.images}
                     price={el.price}
                     type={el.type}
-                    modalOpen={modalOpen}
-                    setModalOpen={setModalOpen}
-                  />
-                <Modals
-                  modalOpen={modalOpen}
-                  setModalOpen={setModalOpen}
-                  project_name={el.project_name}
-                  images={el.images}
                   />
                 </span>
               ))
             : data?.search_real_estates?.map(
                 (el: RealEstate, index: number) => (
-                  <span key={index}>
+                  <span key={index} className="max-w-full">
                     <Cards
                       project_name={el.project_name}
                       short_description={el.short_description}
                       area={el.area}
                       bed_count={el.bed_count}
-                      imageUrl={el.images[0]?.imageUrl}
+                      images={el.images}
                       price={el.price}
                       type={el.type}
-                      modalOpen={modalOpen}
-                      setModalOpen={setModalOpen}
                     />
-                  <Modals
-                    modalOpen={modalOpen}
-                    setModalOpen={setModalOpen}
-                    project_name={el.project_name}
-                    images={el.images}
-                  />
                   </span>
                 )
               )}

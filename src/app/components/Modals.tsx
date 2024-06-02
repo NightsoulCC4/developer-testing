@@ -1,7 +1,7 @@
 import React from "react";
 import { Carousel, Modal } from "antd";
 
-import { ModalType } from "../constants/interfaces";
+import { ModalType } from "../datatype/interfaces";
 
 const Modals: React.FC<ModalType> = ({
   modalOpen,
@@ -9,9 +9,6 @@ const Modals: React.FC<ModalType> = ({
   project_name,
   images,
 }) => {
-  const showModal = () => {
-    setModalOpen(true);
-  };
 
   const handleOk = () => {
     setModalOpen(false);
@@ -19,11 +16,7 @@ const Modals: React.FC<ModalType> = ({
 
   const handleCancel = () => {
     setModalOpen(false);
-  };
-
-  const onChange = (currentSlide: number) => {
-    console.log(currentSlide);
-  };
+};
 
   return (
     <Modal
@@ -34,7 +27,7 @@ const Modals: React.FC<ModalType> = ({
       centered
       width={820}
     >
-      <Carousel afterChange={onChange} arrows infinite={false}>
+      <Carousel arrows infinite={false}>
         {images.length > 0 ? (
           images.map((el, index) => (
             <div key={index} className="w-full">

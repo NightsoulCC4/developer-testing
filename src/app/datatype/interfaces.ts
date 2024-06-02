@@ -57,10 +57,8 @@ export interface CardsType {
   price: number;
   bed_count: number;
   area: string;
-  imageUrl: string;
+  images: Image[];
   type: string;
-  modalOpen: boolean;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface NavbarsType {

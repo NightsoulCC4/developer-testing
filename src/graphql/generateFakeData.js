@@ -83,4 +83,4 @@ const generateFakeData = async (counter) => {
     };
 }
 
-generateFakeData(20);
+generateFakeData(10);

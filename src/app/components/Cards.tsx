@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Space } from "antd";
-import { CardsType } from "../constants/interfaces";
+import { CardsType } from "../datatype/interfaces";
+import Modals from "./Modals";
 
 const Cards: React.FC<CardsType> = ({
   project_name,
@@ -8,11 +9,12 @@ const Cards: React.FC<CardsType> = ({
   price,
   bed_count,
   area,
-  imageUrl,
+  images,
   type,
-  modalOpen,
-  setModalOpen,
 }) => {
+
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+
   return (
     <Space direction="vertical" size={16}>
       <Card
@@ -27,9 +29,15 @@ const Cards: React.FC<CardsType> = ({
         <p>Area: {area}</p>
         <p className="line-clamp-2">Description: {short_description}</p>
         <div>
-          <img src={imageUrl} alt="no-img" />
+          <img src={images[0].imageUrl} alt="no-img" />
         </div>
       </Card>
+      <Modals
+        modalOpen={modalOpen}
+        setModalOpen={setModalOpen}
+        project_name={project_name}
+        images={images}
+      />
     </Space>
   );
 };

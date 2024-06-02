@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import { Button, Layout, Menu, Dropdown, Space, Input } from "antd";
+import { Button, Layout, Menu, Dropdown, Space, Input, message } from "antd";
 import { DownOutlined, SearchOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 
 import PriceAlertCard from "./PriceAlertCard";
 
-import type { DataSearch, NavbarsType } from "../constants/interfaces";
+import type { DataSearch, NavbarsType } from "../datatype/interfaces";
 import { searchData } from "../service";
 
 const { Header } = Layout;
@@ -23,9 +23,40 @@ const Navbar: React.FC<NavbarsType> = ({
   setBedCount,
   area,
   setArea,
-  data,
   setData,
 }) => {
+
+  const minPriceOnClick: MenuProps["onClick"] = (e) => {
+
+    let value:number = 0;
+
+      switch (e.key) {
+      case "2":
+        value = 10000;
+        break;
+      case "3":
+        value = 50000;
+        break;
+      case "4":
+        value = 100000;
+        break;
+      case "5":
+        value = 250000;
+        break;
+      case "6":
+        value = 500000;
+        break;
+      case "7":
+        value = 750000;
+        break;
+      default:
+        break;
+    }
+
+    setMinPrice(value);
+
+  };
+
   const maxPriceOnClick: MenuProps["onClick"] = (e) => {
 
     let value:number = 0;
@@ -35,9 +66,21 @@ const Navbar: React.FC<NavbarsType> = ({
         value = 10000;
         break;
       case "3":
-        value = 100000;
+        value = 50000;
         break;
       case "4":
+        value = 100000;
+        break;
+      case "5":
+        value = 250000;
+        break;
+      case "6":
+        value = 500000;
+        break;
+      case "7":
+        value = 750000;
+        break;
+      case "8":
         value = 1000000;
         break;
       default:
@@ -45,25 +88,6 @@ const Navbar: React.FC<NavbarsType> = ({
     }
 
     setMaxPrice(value);
-
-  };
-
-  const minPriceOnClick: MenuProps["onClick"] = (e) => {
-
-    let value:number = 0;
-
-    switch (e.key) {
-      case "2":
-        value = 10000;
-        break;
-      case "3":
-        value = 100000;
-        break;
-      default:
-        break;
-    }
-
-    setMinPrice(value);
 
   };
 
@@ -116,8 +140,24 @@ const Navbar: React.FC<NavbarsType> = ({
       key: "2",
     },
     {
-      label: 100000,
+      label: 50000,
       key: "3",
+    },
+    {
+      label: 100000,
+      key: "4",
+    },
+    {
+      label: 250000,
+      key: "5",
+    },
+    {
+      label: 500000,
+      key: "6",
+    },
+    {
+      label: 750000,
+      key: "7",
     },
   ];
 
@@ -131,12 +171,28 @@ const Navbar: React.FC<NavbarsType> = ({
       key: "2",
     },
     {
-      label: 100000,
+      label: 50000,
       key: "3",
     },
     {
-      label: 1000000,
+      label: 100000,
       key: "4",
+    },
+    {
+      label: 250000,
+      key: "5",
+    },
+    {
+      label: 500000,
+      key: "6",
+    },
+    {
+      label: 750000,
+      key: "7",
+    },
+    {
+      label: 1000000,
+      key: "8",
     },
   ];
 
@@ -166,10 +222,10 @@ const Navbar: React.FC<NavbarsType> = ({
       >
         <Menu
           className="flex min-w-0 flex-1 max-h-screen justify-start"
-          theme="dark"
           mode="horizontal"
+          theme="dark"
         >
-          <div className="max-w-fit w-full inline-flex my-auto  mx-2 flex-nowrap justify-items-start overflow-hidden rounded-lg">
+          <div className="max-w-fit w-full inline-flex my-auto mx-2 flex-nowrap justify-items-start overflow-hidden rounded-lg">
             <Button
               className="px-2 py-6"
               type={purchaseType == "rent" ? "primary" : "default"}
@@ -229,10 +285,13 @@ const Navbar: React.FC<NavbarsType> = ({
             onClick={() => {
               searchData(purchaseType, minPrice, maxPrice, bedCount, area).then(
                 (res: DataSearch) => {
-                  if (res) {
+                  if (res.data.search_real_estates != null) {
                     const data = res.data;
                     console.log(data);
                     setData(data);
+                  }
+                  else {
+                    message.info("No data!!");
                   }
                 }
               );
