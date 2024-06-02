@@ -1,7 +1,7 @@
 const { gql } = require("apollo-server");
 
 const typeDefs = gql`
-    type image_gallery {
+  type image_gallery {
     id_image_gallery: Int
     imageUrl: String
     id_real_estate: Int

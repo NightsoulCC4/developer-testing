@@ -5,11 +5,15 @@ services:
     build: ./frontend
     ports:
       - "3000:3000"
+    networks:
+      - fazwaz_network
   
   backend: 
     build: ./backend
     ports:
       - "4000:4000"
+    networks:
+      - fazwaz_network
   
   database:
     image: mysql:8.4.0
@@ -17,12 +21,17 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: fazwaz
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - fazwaz:/data/mysql
+    networks:
+      - fazwaz_network
+
   
   # fakedata:
 
-
+networks:
+  fazwaz_network:
 volumes:
   fazwaz:
+

@@ -15,7 +15,7 @@ const main = () => {
     plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
   });
 
-  server.listen().then(({ url }) => {
+  server.listen(4000).then(({ url }) => {
     log(`🚀  Server ready at ${url}`);
   });
 };
