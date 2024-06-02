@@ -27,9 +27,6 @@ services:
     networks:
       - fazwaz_network
 
-  
-  # fakedata:
-
 networks:
   fazwaz_network:
 volumes:

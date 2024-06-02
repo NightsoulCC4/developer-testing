@@ -1,6 +1,6 @@
 const { faker } = require("@faker-js/faker");
 const { log } = require("console");
-const config = require("../graphql/config");
+const config = require("../config");
 const mysql = require("mysql2/promise");
 
 const generateFakeData = async (counter) => {
