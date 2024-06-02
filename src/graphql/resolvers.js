@@ -1,14 +1,14 @@
 const mysql = require("mysql2/promise");
 const config = require("./config");
+const { log } = require("console");
 
 const resolvers = {
     Query: {
         real_estates: async () => {
-
             const con = await mysql.createConnection(config);
+            let rows;
 
             try {
-                var rows;
                 const [result] = await con.execute(
                     `SELECT *
                         FROM fazwaz.real_estate
@@ -35,14 +35,14 @@ const resolvers = {
 
                             return el;
                         } catch (e) {
-                            console.log(e);
+                            log(e);
                         }
                     });
 
                     return rows;
                 }
             } catch (e) {
-                console.log(e);
+                log(e);
             }
         },
         search_real_estates: async (_, args) => {
@@ -112,7 +112,7 @@ const resolvers = {
 
                             return el;
                         } catch (e) {
-                            console.log(e);
+                            log(e);
                         }
                     });
 
@@ -120,7 +120,7 @@ const resolvers = {
 
                 };
             } catch (e) {
-                console.log(e);
+                log(e);
             };
 
         },
