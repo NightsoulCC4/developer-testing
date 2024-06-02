@@ -1,28 +1,28 @@
 version: "3.9"
 
 services:
-  # frontend:
-  #   build: .
-  #   ports:
-  #     - "3000:3000"
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
   
-  backend:
-    build: .
+  backend: 
+    build: ./backend
     ports:
       - "4000:4000"
   
-  # database:
-  #   image: mysql:8.4.0
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: 1234
-  #     MYSQL_DATABASE: fazwaz
-  #   ports:
-  #     - "3306:3306"
-  #   volumes:
-  #     - fazwaz:/data/mysql
+  database:
+    image: mysql:8.4.0
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: fazwaz
+    ports:
+      - "3306:3306"
+    volumes:
+      - fazwaz:/data/mysql
   
   # fakedata:
-  # Add your fakedata service configuration here
 
-# volumes:
-#   fazwaz:
+
+volumes:
+  fazwaz:
