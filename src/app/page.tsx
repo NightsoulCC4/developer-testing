@@ -19,6 +19,7 @@ interface RealEstate {
   price: number;
   project_name: string;
   short_description: string;
+  type: string;
   images: Image[];
 }
 
@@ -32,21 +33,29 @@ interface RealEstates {
   real_estates: RealEstate[];
 }
 
-type El = RealEstate;
-
 const App = () => {
   const [data, setData] = React.useState<RealEstates | undefined>();
 
-  if (data == undefined)
-    getData().then((res: Data) => {
-      console.log(res.data.real_estates);
+  const [purchaseType, setPurchaseType] = React.useState<string>("rent");
+  const [minPrice, setMinPrice] = React.useState<number>(0);
+  const [maxPrice, setMaxPrice] = React.useState<number>(0);
+  const [bedCount, setBedCount] = React.useState<number>(0);
+  const [area, setArea] = React.useState<string>("");
 
-      setData(res.data);
-    });
+  if (data == undefined) getData().then((res: Data) => setData(res.data));
 
   return (
     <div>
-      <Navbar />
+      <Navbar
+        purchaseType={purchaseType}
+        setPurchaseType={setPurchaseType}
+        minPrice={minPrice}
+        setMinPrice={setMinPrice}
+        maxPrice={maxPrice}
+        setMaxPrice={setMaxPrice}
+        bedCount={bedCount}
+        setBedCount={setBedCount}
+      />
       {data?.real_estates?.map((el: RealEstate, index: number) => (
         <Cards
           key={index}
@@ -56,6 +65,7 @@ const App = () => {
           bed_count={el.bed_count}
           imageUrl={el.images[0]?.imageUrl}
           price={el.price}
+          type={el.type}
         />
       ))}
     </div>

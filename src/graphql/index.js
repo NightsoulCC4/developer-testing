@@ -20,6 +20,7 @@ const typeDefs = gql`
     bed_count: Int
     price: Float
     short_description: String
+    type: String
     images: [image_gallery]
   }
 
