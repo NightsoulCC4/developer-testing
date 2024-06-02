@@ -1,18 +1,22 @@
-"use client";
-
-import React from "react";
-import { Button, Layout, Menu, Dropdown, Space, Input, message } from "antd";
+import {
+  Button,
+  Dropdown,
+  Input,
+  Layout,
+  Menu,
+  MenuProps,
+  message,
+  Space,
+} from "antd";
 import { DownOutlined, SearchOutlined } from "@ant-design/icons";
-import type { MenuProps } from "antd";
+import React from "react";
 
+import { DataSearch, NavbarsType } from "../datatype/interfaces";
+import { Header } from "antd/es/layout/layout";
+import { searchData } from "../service";
 import PriceAlertCard from "./PriceAlertCard";
 
-import type { DataSearch, NavbarsType } from "../datatype/interfaces";
-import { searchData } from "../service";
-
-const { Header } = Layout;
-
-const Navbar: React.FC<NavbarsType> = ({
+const NavbarMobile: React.FC<NavbarsType> = ({
   purchaseType,
   setPurchaseType,
   minPrice,
@@ -215,47 +219,27 @@ const Navbar: React.FC<NavbarsType> = ({
         }}
       >
         <Menu
-          className="flex min-w-0 flex-1 max-h-svh justify-start max-sm:flex-col"
+          className="flex min-w-0 flex-1 max-h-svh justify-start flex-col"
           mode="horizontal"
           theme="dark"
         >
-          <div className="max-w-fit w-full inline-flex my-auto mx-2 flex-nowrap justify-items-start overflow-hidden rounded-lg">
+          <div className="max-w-2xl w-full inline-flex my-2 mx-2 flex-nowrap justify-items-start overflow-hidden rounded-lg">
             <Button
-              className="px-2 py-6"
+              className="px-2 py-6 max-w-md w-full"
               type={purchaseType == "rent" ? "primary" : "default"}
               onClick={() => setPurchaseType("rent")}
             >
               Rent
             </Button>
             <Button
-              className="px-2 py-6"
+              className="px-2 py-6 mmax-w-md w-full"
               type={purchaseType == "sale" ? "primary" : "default"}
               onClick={() => setPurchaseType("sale")}
             >
               Sale
             </Button>
-          </div>
-          <div className="max-w-fit w-full inline-flex my-auto mx-2 flex-nowrap justify-items-start overflow-hidden rounded-lg">
-            <Dropdown menu={minPriceProps}>
-              <Button className="max-w-sm">
-                <Space>
-                  {minPrice == 0 ? "min price" : minPrice}
-                  <DownOutlined />
-                </Space>
-              </Button>
-            </Dropdown>
-            <Dropdown menu={maxPriceProps}>
-              <Button className="max-w-sm">
-                <Space>
-                  {maxPrice == 0 ? "max price" : maxPrice}
-                  <DownOutlined />
-                </Space>
-              </Button>
-            </Dropdown>
-          </div>
-          <div className="max-w-fit w-full inline-flex my-auto mx-2 flex-nowrap justify-items-start overflow-hidden rounded-lg">
             <Dropdown menu={bedCountProps}>
-              <Button className="max-w-sm mr-2">
+              <Button className="max-w-sm mr-2 mx-8">
                 <Space>
                   {bedCount == 4 ? ">" : ""}
                   {bedCount == 0 ? "Beds" : bedCount}
@@ -264,33 +248,58 @@ const Navbar: React.FC<NavbarsType> = ({
               </Button>
             </Dropdown>
           </div>
-          <Input
-            size="small"
-            placeholder="Name of Area"
-            className="w-full max-w-56"
-            onChange={(e) => setArea(e.target.value)}
-            value={area}
-          />
-          <Button
-            className="max-w-lg my-auto mx-2 max-sm:max-w-12 max-sm:py-0"
-            type="primary"
-            icon={<SearchOutlined />}
-            disabled={maxPrice < minPrice}
-            onClick={() => {
-              searchData(purchaseType, minPrice, maxPrice, bedCount, area).then(
-                (res: DataSearch) => {
+          <div className="max-w-2xl w-full inline-flex my-2 mx-2 flex-nowrap justify-items-start overflow-hidden rounded-lg">
+            <Dropdown menu={minPriceProps}>
+              <Button className="max-w-2xl w-full">
+                <Space>
+                  {minPrice == 0 ? "min price" : minPrice}
+                  <DownOutlined />
+                </Space>
+              </Button>
+            </Dropdown>
+            <Dropdown menu={maxPriceProps}>
+              <Button className="max-w-2xl w-full">
+                <Space>
+                  {maxPrice == 0 ? "max price" : maxPrice}
+                  <DownOutlined />
+                </Space>
+              </Button>
+            </Dropdown>
+          </div>
+          <div className="max-w-2xl w-full inline-flex my-2 mx-2 flex-nowrap justify-items-start overflow-hidden rounded-lg">
+            <Input
+              size="small"
+              placeholder="Name of Area"
+              className="w-full"
+              style={{
+                maxWidth: 500,
+              }}
+              onChange={(e) => setArea(e.target.value)}
+              value={area}
+            />{" "}
+            <Button
+              className="my-auto w-full max-w-24 py-0"
+              type="primary"
+              icon={<SearchOutlined />}
+              disabled={maxPrice < minPrice}
+              onClick={() => {
+                searchData(
+                  purchaseType,
+                  minPrice,
+                  maxPrice,
+                  bedCount,
+                  area
+                ).then((res: DataSearch) => {
                   if (res.data.search_real_estates != null) {
                     const data = res.data;
                     setData(data);
                   } else {
                     message.info("No data!!");
                   }
-                }
-              );
-            }}
-          >
-            Search
-          </Button>
+                });
+              }}
+            />
+          </div>
         </Menu>
         {maxPrice < minPrice ? <PriceAlertCard /> : <></>}
       </Header>
@@ -298,4 +307,4 @@ const Navbar: React.FC<NavbarsType> = ({
   );
 };
 
-export default Navbar;
+export default NavbarMobile;

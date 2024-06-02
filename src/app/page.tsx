@@ -11,7 +11,7 @@ import {
   Data,
   SearchRealEstates,
 } from "./datatype/interfaces";
-import Modals from "./components/Modals";
+import NavbarMobile from "./components/NavbarMobile";
 
 const App: React.FC = () => {
   const [data, setData] = React.useState<
@@ -23,9 +23,22 @@ const App: React.FC = () => {
   const [maxPrice, setMaxPrice] = React.useState<number>(0);
   const [bedCount, setBedCount] = React.useState<number>(0);
   const [area, setArea] = React.useState<string>("");
+  const [currentWidth, setCurrentWidth] = React.useState<number>(window.innerWidth);
 
   React.useEffect(() => {
-    if (data == undefined) getData().then((res: Data) => setData(res.data));
+    if (data == undefined)
+      getData().then((res: Data) => setData(res.data));
+  });
+
+  React.useEffect(() => {
+
+    const updateSize = () => setCurrentWidth(window.innerWidth);
+
+    window.addEventListener('resize', updateSize);
+    updateSize();
+
+    return () => window.removeEventListener('resize', updateSize);
+
   });
 
   const isRealEstates = (data: any): data is RealEstates => {
@@ -34,20 +47,37 @@ const App: React.FC = () => {
 
   return (
     <>
-      <Navbar
-        purchaseType={purchaseType}
-        setPurchaseType={setPurchaseType}
-        minPrice={minPrice}
-        setMinPrice={setMinPrice}
-        maxPrice={maxPrice}
-        setMaxPrice={setMaxPrice}
-        bedCount={bedCount}
-        setBedCount={setBedCount}
-        area={area}
-        setArea={setArea}
-        data={data}
-        setData={setData}
-      />
+      {currentWidth >= 855 ? (
+        <Navbar
+          purchaseType={purchaseType}
+          setPurchaseType={setPurchaseType}
+          minPrice={minPrice}
+          setMinPrice={setMinPrice}
+          maxPrice={maxPrice}
+          setMaxPrice={setMaxPrice}
+          bedCount={bedCount}
+          setBedCount={setBedCount}
+          area={area}
+          setArea={setArea}
+          data={data}
+          setData={setData}
+        />
+      ) : (
+        <NavbarMobile
+          purchaseType={purchaseType}
+          setPurchaseType={setPurchaseType}
+          minPrice={minPrice}
+          setMinPrice={setMinPrice}
+          maxPrice={maxPrice}
+          setMaxPrice={setMaxPrice}
+          bedCount={bedCount}
+          setBedCount={setBedCount}
+          area={area}
+          setArea={setArea}
+          data={data}
+          setData={setData}
+        />
+      )}
       {
         <div className="mx-8 my-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 justify-center content-center max-w-full">
           {isRealEstates(data)

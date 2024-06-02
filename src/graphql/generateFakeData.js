@@ -75,7 +75,8 @@ const generateFakeData = async (counter) => {
                 }
             });
 
-            log("generated data success!!");
+            log("generated data ", i, " success!!");
+
         } catch (e) {
             log(e);
             return e;
