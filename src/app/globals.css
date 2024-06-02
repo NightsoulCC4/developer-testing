@@ -26,6 +26,12 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+.card:hover {
+  background-color: rgb(203, 213, 225);
+  cursor: pointer;
+  transition: 500ms;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

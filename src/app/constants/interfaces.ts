@@ -1,5 +1,8 @@
 /* ------------------------------------------------------------------------------------------------------------------ */
 // Data layer.
+
+import React from "react";
+
 /* ------------------------------------------------------------------------------------------------------------------ */
 export interface Data {
   data: {
@@ -43,4 +46,41 @@ export interface RealEstate {
   short_description: string;
   type: string;
   images: Image[];
+}
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+// Components layer.
+/* ------------------------------------------------------------------------------------------------------------------ */
+export interface CardsType {
+  project_name: string;
+  short_description: string;
+  price: number;
+  bed_count: number;
+  area: string;
+  imageUrl: string;
+  type: string;
+  modalOpen: boolean;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface NavbarsType {
+  purchaseType: string;
+  setPurchaseType: React.Dispatch<React.SetStateAction<string>>;
+  minPrice: number;
+  setMinPrice: React.Dispatch<React.SetStateAction<number>>;
+  maxPrice: number;
+  setMaxPrice: React.Dispatch<React.SetStateAction<number>>;
+  bedCount: number;
+  setBedCount: React.Dispatch<React.SetStateAction<number>>;
+  area: string;
+  setArea: React.Dispatch<React.SetStateAction<string>>;
+  data: RealEstates | SearchRealEstates | undefined;
+  setData: React.Dispatch<
+    React.SetStateAction<RealEstates | SearchRealEstates | undefined>
+  >;
+}
+
+export interface ModalType {
+  modalOpen: boolean;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }

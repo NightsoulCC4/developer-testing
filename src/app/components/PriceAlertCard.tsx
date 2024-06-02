@@ -14,7 +14,6 @@ const PriceAlertCard: React.FC = () => {
         fontSize: 20,
         textAlign: "center",
       }}
-      onClick={() => console.log("aaa")}
     >
       min price can not higher than max price
     </Card>

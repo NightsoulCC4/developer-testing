@@ -1,33 +1,18 @@
 "use client";
 
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { Button, Layout, Menu, Dropdown, Space, Input } from "antd";
 import { DownOutlined, SearchOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 
 import PriceAlertCard from "./PriceAlertCard";
 
-import type { RealEstates, DataSearch, SearchRealEstates } from "../constants/interfaces";
+import type { DataSearch, NavbarsType } from "../constants/interfaces";
 import { searchData } from "../service";
 
 const { Header } = Layout;
 
-interface Navbar {
-  purchaseType: string;
-  setPurchaseType: Dispatch<SetStateAction<string>>;
-  minPrice: number;
-  setMinPrice: Dispatch<SetStateAction<number>>;
-  maxPrice: number;
-  setMaxPrice: Dispatch<SetStateAction<number>>;
-  bedCount: number;
-  setBedCount: Dispatch<SetStateAction<number>>;
-  area: string;
-  setArea: Dispatch<SetStateAction<string>>;
-  data: RealEstates | SearchRealEstates | undefined;
-  setData: Dispatch<SetStateAction<RealEstates | SearchRealEstates | undefined>>;
-}
-
-const Navbar: React.FC<Navbar> = ({
+const Navbar: React.FC<NavbarsType> = ({
   purchaseType,
   setPurchaseType,
   minPrice,
