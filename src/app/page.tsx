@@ -1,19 +1,20 @@
 "use client";
 
-import React, { Key } from "react";
+import React from "react";
 import { getData } from "./service";
 import Navbar from "./components/Navbar";
+import Cards from "./components/Cards";
 
 interface data {
   data: {
     real_estates: [
       {
-        area: String;
-        bed_count: Number;
-        id_real_estate: Number;
-        imageUrl: String;
-        price: Number;
-        name: String;
+        area: string;
+        bed_count: number;
+        id_real_estate: number;
+        imageUrl: string;
+        price: number;
+        name: string;
       }
     ];
   };
@@ -22,14 +23,23 @@ interface data {
 interface real_estates {
   real_estates: [
     {
-      area: String;
-      bed_count: Number;
-      id_real_estate: Number;
-      imageUrl: String;
-      price: Number;
-      name: String;
+      area: string;
+      bed_count: number;
+      id_real_estate: number;
+      imageUrl: string;
+      price: number;
+      name: string;
     }
   ];
+}
+
+interface el {
+  area: string;
+  bed_count: number;
+  id_real_estate: number;
+  imageUrl: string;
+  price: number;
+  name: string;
 }
 
 const App = () => {
@@ -44,18 +54,16 @@ const App = () => {
 
   return (
     <div>
-       <Navbar />
-      {data?.real_estates?.map((el: any, index: Key) => (
-        <div key={index}>
-          <h2>{el.projectName}</h2>
-          <p>Name: {el.name}</p>
-          <p>Price: {el.price}฿</p>
-          <p>Bedrooms: {el.bed_count}</p>
-          <p>Area: {el.area}</p>
-          <div>
-            <img src={el.imageUrl} alt="no-img" />
-          </div>
-        </div>
+      <Navbar />
+      {data?.real_estates?.map((el: el, index: number) => (
+        <Cards
+          key={index}
+          name={el.name}
+          area={el.area}
+          bed_count={el.bed_count}
+          imageUrl={el.imageUrl}
+          price={el.price}
+        />
       ))}
     </div>
   );

@@ -6,7 +6,6 @@ import {
   Layout,
   Menu,
   Typography,
-  Input,
   Dropdown,
   message,
   Space,
@@ -16,7 +15,6 @@ import type { SearchProps } from "antd/es/input/Search";
 import { DownOutlined } from "@ant-design/icons";
 import type { InputNumberProps, MenuProps } from "antd";
 
-const { Search } = Input;
 const { Title } = Typography;
 
 const { Header } = Layout;
