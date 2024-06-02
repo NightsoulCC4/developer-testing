@@ -1,44 +1,28 @@
-version: '3.9'
+version: "3.9"
 
 services:
-  nextjs:
-    image: node:20
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: sh -c "npm install && npm run dev"
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
-
-  graphql:
-    image: node:20
-    volumes:
-      - .:/graphql
-    working_dir: /graphql
-    command: sh -c "npm install && nodemon index.js"
+  # frontend:
+  #   build: .
+  #   ports:
+  #     - "3000:3000"
+  
+  backend:
+    build: .
     ports:
       - "4000:4000"
-    depends_on:
-      - db
+  
+  # database:
+  #   image: mysql:8.4.0
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 1234
+  #     MYSQL_DATABASE: fazwaz
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - fazwaz:/data/mysql
+  
+  # fakedata:
+  # Add your fakedata service configuration here
 
-  db:
-    image: mysql:8.4
-    environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: fazwaz
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
-
-  fake-data:
-    image: node:20
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: node scripts/generateFakeData.js
-
-volumes:
-  db_data:
+# volumes:
+#   fazwaz:
