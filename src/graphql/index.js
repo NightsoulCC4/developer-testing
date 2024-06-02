@@ -1,5 +1,4 @@
 const { ApolloServer, gql } = require("apollo-server");
-const generateFakeData = require("./generateFakeData");
 const mysql = require("mysql2/promise");
 const { log } = require("console");
 const {
@@ -30,62 +29,8 @@ const typeDefs = gql`
 `;
 
 const main = async () => {
-  let data;
+
   const con = await mysql.createConnection(config);
-
-  const [rows] = await con.execute(`SELECT * FROM fazwaz.real_estate;`);
-
-  if (rows.length === 0) {
-    data = generateFakeData(5);
-
-    data.forEach(async (el) => {
-      const image = el.imageUrl;
-
-      try {
-        const [rows] = await con.execute(
-          `INSERT INTO fazwaz.real_estate
-          (project_name,
-          area,
-          bed_count,
-          price,
-          short_description)
-          VALUES
-          (?, ?, ?, ?, ?);`,
-          [
-            el.project_name,
-            el.area,
-            el.bed_count,
-            el.price,
-            el.short_description,
-          ]
-        );
-
-        image.forEach(async (imageUrl) => {
-          try {
-            await con.execute(
-              `INSERT INTO fazwaz.image_gallery
-              (
-                imageUrl,
-                id_real_estate
-              )
-              VALUES
-              (?, ?);
-              `,
-              [imageUrl, rows.insertId]
-            );
-          } catch (e) {
-            log(e);
-            return e;
-          }
-        });
-
-        log("generated data success!!");
-      } catch (e) {
-        log(e);
-        return e;
-      }
-    });
-  }
 
   const resolvers = {
     Query: {
@@ -112,10 +57,9 @@ const main = async () => {
                     images,
                   };
                 }
-                log(el)
-
 
                 return el;
+
               } catch (e) {
                 log(e);
               }
@@ -139,7 +83,7 @@ const main = async () => {
   });
 
   server.listen().then(({ url }) => {
-    console.log(`🚀  Server ready at ${url}`);
+    log(`🚀  Server ready at ${url}`);
   });
 };
 

@@ -4,7 +4,7 @@ export const getData = async () => {
     myHeaders.append("Content-Type", "application/json");
 
     const graphql = JSON.stringify({
-        query: "query Query {\r\n  real_estates {\r\n    area\r\n    bed_count\r\n    id_real_estate\r\n    imageUrl\r\n    price\r\n    name\r\n  }\r\n}",
+        query: "query Query {\r\n  real_estates {\r\n    area\r\n    bed_count\r\n    id_real_estate\r\n    price\r\n    project_name\r\n    short_description\r\n    images {\r\n      id_image_gallery\r\n      id_real_estate\r\n      imageUrl\r\n    }\r\n  }\r\n}",
         variables: {}
     })
     const requestOptions = {

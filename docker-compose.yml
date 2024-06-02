@@ -12,6 +12,17 @@ services:
     depends_on:
       - db
 
+  graphql:
+    image: node:20
+    volumes:
+      - .:/graphql
+    working_dir: /graphql
+    command: sh -c "npm install && nodemon index.js"
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+
   db:
     image: mysql:8.4
     environment:
