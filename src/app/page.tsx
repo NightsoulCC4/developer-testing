@@ -23,7 +23,7 @@ const App: React.FC = () => {
   const [maxPrice, setMaxPrice] = React.useState<number>(0);
   const [bedCount, setBedCount] = React.useState<number>(0);
   const [area, setArea] = React.useState<string>("");
-  const [currentWidth, setCurrentWidth] = React.useState<number>(window.innerWidth);
+  const [currentWidth, setCurrentWidth] = React.useState<number>(0);
 
   React.useEffect(() => {
     if (data == undefined)
@@ -32,7 +32,7 @@ const App: React.FC = () => {
 
   React.useEffect(() => {
 
-    const updateSize = () => setCurrentWidth(window.innerWidth);
+    const updateSize = ():void => setCurrentWidth(window.innerWidth);
 
     window.addEventListener('resize', updateSize);
     updateSize();
