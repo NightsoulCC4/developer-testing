@@ -83,4 +83,6 @@ export interface NavbarsType {
 export interface ModalType {
   modalOpen: boolean;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  project_name: string;
+  images: Image[];
 }

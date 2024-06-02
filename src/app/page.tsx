@@ -70,6 +70,8 @@ const App = () => {
                 <Modals
                   modalOpen={modalOpen}
                   setModalOpen={setModalOpen}
+                  project_name={el.project_name}
+                  images={el.images}
                   />
                 </span>
               ))
@@ -89,7 +91,10 @@ const App = () => {
                     />
                   <Modals
                     modalOpen={modalOpen}
-                    setModalOpen={setModalOpen} />
+                    setModalOpen={setModalOpen}
+                    project_name={el.project_name}
+                    images={el.images}
+                  />
                   </span>
                 )
               )}

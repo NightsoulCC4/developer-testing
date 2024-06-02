@@ -20,7 +20,7 @@ const generateFakeData = async (counter) => {
             project_name: faker.company.name(),
             short_description: faker.lorem.sentences(),
             area: faker.location.country(),
-            bed_count: Math.floor(Math.random() * (6 - 1 + 1)) + 1,
+            bed_count: faker.number.int({ min: 1, max: 10 }),
             price: faker.commerce.price({ min: 10000.0, max: 1000000.0 }),
             type: type
         };

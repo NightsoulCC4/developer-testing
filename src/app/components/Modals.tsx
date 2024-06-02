@@ -1,10 +1,14 @@
 import React from "react";
-import { Modal } from "antd";
+import { Carousel, Modal } from "antd";
 
 import { ModalType } from "../constants/interfaces";
 
-const Modals: React.FC<ModalType> = ({ modalOpen, setModalOpen }) => {
-    
+const Modals: React.FC<ModalType> = ({
+  modalOpen,
+  setModalOpen,
+  project_name,
+  images,
+}) => {
   const showModal = () => {
     setModalOpen(true);
   };
@@ -17,16 +21,30 @@ const Modals: React.FC<ModalType> = ({ modalOpen, setModalOpen }) => {
     setModalOpen(false);
   };
 
+  const onChange = (currentSlide: number) => {
+    console.log(currentSlide);
+  };
+
   return (
     <Modal
-      title="Basic Modal"
+      title={project_name}
       open={modalOpen}
       onOk={handleOk}
       onCancel={handleCancel}
+      centered
+      width={820}
     >
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
+      <Carousel afterChange={onChange} arrows infinite={false}>
+        {images.length > 0 ? (
+          images.map((el, index) => (
+            <div key={index} className="w-full">
+              <img src={el.imageUrl} className="w-full" />
+            </div>
+          ))
+        ) : (
+          <></>
+        )}
+      </Carousel>
     </Modal>
   );
 };

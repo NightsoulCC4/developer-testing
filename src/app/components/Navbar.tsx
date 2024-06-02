@@ -27,38 +27,44 @@ const Navbar: React.FC<NavbarsType> = ({
   setData,
 }) => {
   const maxPriceOnClick: MenuProps["onClick"] = (e) => {
+
+    let value:number = 0;
+
     switch (e.key) {
-      case "1":
-        setMaxPrice(0);
-        break;
       case "2":
-        setMaxPrice(10000);
+        value = 10000;
         break;
       case "3":
-        setMaxPrice(100000);
+        value = 100000;
         break;
       case "4":
-        setMaxPrice(1000000);
+        value = 1000000;
         break;
       default:
         break;
     }
+
+    setMaxPrice(value);
+
   };
 
   const minPriceOnClick: MenuProps["onClick"] = (e) => {
+
+    let value:number = 0;
+
     switch (e.key) {
-      case "1":
-        setMinPrice(0);
-        break;
       case "2":
-        setMinPrice(10000);
+        value = 10000;
         break;
       case "3":
-        setMinPrice(100000);
+        value = 100000;
         break;
       default:
         break;
     }
+
+    setMinPrice(value);
+
   };
 
   const onClickBedCount: MenuProps["onClick"] = (e) => {
