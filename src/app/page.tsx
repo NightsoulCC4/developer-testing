@@ -29,7 +29,7 @@ interface Data {
   };
 }
 
-interface RealEstates {
+export interface RealEstates {
   real_estates: RealEstate[];
 }
 
@@ -55,6 +55,10 @@ const App = () => {
         setMaxPrice={setMaxPrice}
         bedCount={bedCount}
         setBedCount={setBedCount}
+        area={area}
+        setArea={setArea}
+        data={data}
+        setData={setData}
       />
       {data?.real_estates?.map((el: RealEstate, index: number) => (
         <Cards

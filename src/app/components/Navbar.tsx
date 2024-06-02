@@ -7,11 +7,14 @@ import {
   Menu,
   Dropdown,
   Space,
-  Card,
   Input,
 } from "antd";
 import { DownOutlined, SearchOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
+
+import PriceAlertCard from "./PriceAlertCard";
+
+import type { RealEstates } from "../page";
 
 const { Header } = Layout;
 
@@ -23,7 +26,11 @@ interface Navbar {
   maxPrice: number;
   setMaxPrice: Dispatch<SetStateAction<number>>;
   bedCount: number;
-  setBedCount: Dispatch<SetStateAction<number>>
+  setBedCount: Dispatch<SetStateAction<number>>;
+  area: string;
+  setArea: Dispatch<SetStateAction<string>>;
+  data: RealEstates | undefined;
+  setData: Dispatch<SetStateAction<RealEstates | undefined >>;
 }
 
 const Navbar: React.FC<Navbar> = ({
@@ -34,7 +41,11 @@ const Navbar: React.FC<Navbar> = ({
   maxPrice,
   setMaxPrice,
   bedCount,
-  setBedCount
+  setBedCount,
+  area,
+  setArea,
+  data,
+  setData
 }) => {
 
   const maxPriceOnClick: MenuProps["onClick"] = (e) => {
@@ -61,9 +72,6 @@ const Navbar: React.FC<Navbar> = ({
         break;
       case "2":
         setMinPrice(100000);
-        break;
-      case "3":
-        setMinPrice(1000000);
         break;
       default:
         setMinPrice(0);
@@ -110,7 +118,18 @@ const Navbar: React.FC<Navbar> = ({
     }
   ]
 
-  const prices: MenuProps["items"] = [
+  const min_prices: MenuProps["items"] = [
+    {
+      label: 10000,
+      key: "1",
+    },
+    {
+      label: 100000,
+      key: "2",
+    },
+  ];
+
+  const max_prices: MenuProps["items"] = [
     {
       label: 10000,
       key: "1",
@@ -126,12 +145,12 @@ const Navbar: React.FC<Navbar> = ({
   ];
 
   const minPriceProps = {
-    items: prices,
+    items: min_prices,
     onClick: minPriceOnClick,
   };
 
   const maxPriceProps = {
-    items: prices,
+    items: max_prices,
     onClick: maxPriceOnClick,
   };
 
@@ -192,35 +211,23 @@ const Navbar: React.FC<Navbar> = ({
             <Dropdown menu={bedCountProps}>
               <Button className="max-w-sm mr-2">
                 <Space>
-                  {bedCount == 0 ? "Beds" : bedCount}
+                  { bedCount == 4 ? ">" : ""}{bedCount == 0 ? "Beds" : bedCount}
                   <DownOutlined />
                 </Space>
               </Button>
             </Dropdown>
           </div>
-          <Input size="small" placeholder="Name of Area" className="w-full max-w-56" />
+          <Input size="small" placeholder="Name of Area" className="w-full max-w-56" onChange={(e) => setArea(e.target.value)} value={area} />
           <Button
             className="max-w-lg my-auto mx-2"
             type="primary"
             icon={<SearchOutlined />}
+            disabled={maxPrice <= minPrice}
           >
             Search
           </Button>
         </Menu>
-        {maxPrice < minPrice ? <Card
-          style={{
-            width: 300,
-            margin: 3,
-            position: "fixed",
-            top: 5,
-            right: 5,
-            color: "red",
-            fontSize: 20,
-            textAlign: "center",
-          }}
-          onClick={() => console.log("aaa")}
-        >min price can not higher than max price
-        </Card> : <></>}
+        {maxPrice <= minPrice ? <PriceAlertCard /> : <></>}
       </Header>
     </Layout>
   );
